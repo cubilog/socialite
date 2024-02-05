@@ -35,7 +35,7 @@ class OAuthTwoTest extends PHPUnit_Framework_TestCase
         $session->shouldReceive('pull')->once()->with('state')->andReturn(str_repeat('A', 40));
         $provider = new OAuthTwoTestProviderStub($request, 'client_id', 'client_secret', 'redirect_uri');
         $provider->http = m::mock('StdClass');
-        $postKey = (version_compare(ClientInterface::VERSION, '6') === 1) ? 'form_params' : 'body';
+        $postKey = 'form_params';
         $provider->http->shouldReceive('post')->once()->with('http://token.url', [
             'headers' => ['Accept' => 'application/json'], $postKey => ['client_id' => 'client_id', 'client_secret' => 'client_secret', 'code' => 'code', 'redirect_uri' => 'redirect_uri'],
         ])->andReturn($response = m::mock('StdClass'));
@@ -56,7 +56,7 @@ class OAuthTwoTest extends PHPUnit_Framework_TestCase
         $session->shouldReceive('pull')->once()->with('state')->andReturn(str_repeat('A', 40));
         $provider = new FacebookTestProviderStub($request, 'client_id', 'client_secret', 'redirect_uri');
         $provider->http = m::mock('StdClass');
-        $postKey = (version_compare(ClientInterface::VERSION, '6') === 1) ? 'form_params' : 'body';
+        $postKey = 'form_params';
         $provider->http->shouldReceive('post')->once()->with('https://graph.facebook.com/v2.9/oauth/access_token', [
             $postKey => ['client_id' => 'client_id', 'client_secret' => 'client_secret', 'code' => 'code', 'redirect_uri' => 'redirect_uri'],
         ])->andReturn($response = m::mock('StdClass'));
